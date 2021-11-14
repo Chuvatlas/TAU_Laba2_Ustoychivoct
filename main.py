@@ -87,3 +87,4 @@ while needNewChoice:
     else:
         print(color.Fore.RED + '\nПожалуйста, введите числовое значение!')
         needNewChoice = True
+print()
