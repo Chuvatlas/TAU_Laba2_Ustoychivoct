@@ -15,22 +15,22 @@ def graph(name):
         pyplot.title(name)
         pyplot.ylabel('Magnitude')
         pyplot.xlabel('Time (s)')
-        # pyplot.savefig('Step_response.png')
+        pyplot.savefig('Step_response.png')
     elif name == 'Годограф Найквиста':
         pyplot.plot()
         pyplot.title(name)
         nyquist = matlab.nyquist(w_opened)
+        pyplot.savefig('Nyquist.png')
     elif name == 'Годограф Михайлова':
-        # x = [U.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
-        # y = [V.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
         pyplot.title(name)
         pyplot.ylabel('V(w)')
         pyplot.xlabel('U(w)')
+        pyplot.savefig('Michailov.png')
     elif name == 'Диаграмма Боде':
         pyplot.title(name)
-        mag, phase, omega = matlab.bode(w_closed, dB=True)
+        mag, phase, omega = matlab.bode(w_opened, dB=True)
+        pyplot.savefig('Bode.png')
     pyplot.show()
-
 
 def step_response(w_closed):
     name = 'Переходная характеристика'
@@ -46,6 +46,7 @@ def roots_equation(w_closed):
     h = matlab.pzmap(w_closed)
     pyplot.grid(True)
     pyplot.show()
+    pyplot.savefig('roots.png')
     print("Полюса: \n %s" % matlab.pole(w_closed))
 
 
@@ -71,8 +72,10 @@ def michailov_plot(w_closed):
     V = im(D_jw)
     print('Действительная часть U(w)= %s' % U)
     print('Мнимая часть V(w)= %s' % V)
-    x = [U.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
-    y = [V.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
+    # x = [U.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
+    # y = [V.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
+    x = [U.subs({w: q}) for q in numpy.arange(0, 0.2, 0.01)]
+    y = [V.subs({w: q}) for q in numpy.arange(0, 0.2, 0.01)]
     print('Начальная точка M(%s, %s)' % (U.subs({w: 0}), V.subs({w: 0})))
     pyplot.plot(x, y, 'green')
     graph(name)
@@ -147,7 +150,7 @@ def wave_limit_stability(w_closed):
     print(w_closed, w_opened)
     return w_closed, w_opened
 
-
+# Начало кода здесь
 k_fb = int(input('Введите значение k_о.с.= '))
 
 w1 = matlab.tf([k_fb, 0], [1])
