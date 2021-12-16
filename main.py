@@ -72,10 +72,10 @@ def michailov_plot(w_closed):
     V = im(D_jw)
     print('Действительная часть U(w)= %s' % U)
     print('Мнимая часть V(w)= %s' % V)
-    # x = [U.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
-    # y = [V.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
-    x = [U.subs({w: q}) for q in numpy.arange(0, 0.2, 0.01)]
-    y = [V.subs({w: q}) for q in numpy.arange(0, 0.2, 0.01)]
+    x = [U.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
+    y = [V.subs({w: q}) for q in numpy.arange(0, 0.75, 0.01)]
+    # x = [U.subs({w: q}) for q in numpy.arange(0, 0.2, 0.01)]
+    # y = [V.subs({w: q}) for q in numpy.arange(0, 0.2, 0.01)]
     print('Начальная точка M(%s, %s)' % (U.subs({w: 0}), V.subs({w: 0})))
     pyplot.plot(x, y, 'green')
     graph(name)
@@ -148,6 +148,7 @@ def wave_limit_stability(w_closed):
         h = get_matrix_hurwitz(w_closed)
         det_h = numpy.linalg.det(h)
     print(w_closed, w_opened)
+    print(k_fb)
     return w_closed, w_opened
 
 # Начало кода здесь
@@ -160,6 +161,9 @@ w4 = matlab.tf([21], [5, 1])
 
 w_closed = matlab.feedback(w2 * w3 * w4, w1)
 w_opened = w1 * w2 * w3 * w4
+
+# w_closed = matlab.tf([60], [24, 101.3, 21.65, 13])
+# w_opened = matlab.tf([20, 0], [24, 101.3, 1.65, 13])
 userInput = input('Введите номер характеристики : \n'
                   '1 - Переходная характеристика' + ';\n'
                   '2 - Корни Х.У.' + ';\n'
@@ -186,8 +190,7 @@ if userInput.isdigit():
                   '2 - Корни Х.У.' + ';\n'
                   '3 - Годограф Найквиста ' + ';\n'
                   '4 - Годограф Михайлова' + ';\n'
-                  '5 - Диаграмма Боде' + ';\n'
-                  '6 - Колебательная граница устойчивости' + '.\n')
+                  '5 - Диаграмма Боде' + '.\n')
 
         if userInput.isdigit():
             userInput = int(userInput)
