@@ -5,7 +5,6 @@ from sympy import *
 import math
 import colorama as color
 
-
 def graph(name):
     pyplot.subplot()
     pyplot.grid(True)
